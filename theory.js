@@ -1,15 +1,18 @@
 const crypto = require('crypto');
 
-// Function to convert Ed25519 key pair to a 12-word seed
+// convert Ed25519 key pair to a 12-word seed
 const keyPairTo12SeedWord = function keyPairTo12SeedWord(ed25519KeyPair) {
-  // todo: use actual conversion logic github.com/dazoe/ed25519
-  return `${ed25519KeyPair.publicKey.toString('hex')}|${ed25519KeyPair.privateKey.toString('hex')}`;
+  // Convert keys to base64 to create a more compact representation
+  const publicKeyBase64 = ed25519KeyPair.publicKey.toString('base64');
+  const privateKeyBase64 = ed25519KeyPair.privateKey.toString('base64');
+
+  return `${publicKeyBase64}|${privateKeyBase64}`;
 };
 
 // scramble a 12-word seed with an alphanumeric PIN
 const scramble = function scramble(seedWords, azAZ09Pin) {
   // Validate input
-  if (!seedWords || !/^[a-fA-F0-9]+\|[a-fA-F0-9]+$/.test(seedWords) || !/^[a-zA-Z0-9]+$/.test(azAZ09Pin)) {
+  if (!seedWords || !/^[a-zA-Z0-9]+(\|[a-zA-Z0-9]+)?$/.test(seedWords) || !/^[a-zA-Z0-9]+$/.test(azAZ09Pin)) {
     throw new Error('Invalid input for scrambling.');
   }
 
@@ -32,7 +35,7 @@ const scramble = function scramble(seedWords, azAZ09Pin) {
 // unscramble data with an alphanumeric PIN
 const unscramble = function unscramble(scrambledSeedWords, azAZ09Pin) {
   // Validate input
-  if (!scrambledSeedWords || !/^[a-fA-F0-9]+\|[a-fA-F0-9]+$/.test(scrambledSeedWords) || !/^[a-zA-Z0-9]+$/.test(azAZ09Pin)) {
+  if (!scrambledSeedWords || !/^[a-zA-Z0-9]+(\|[a-zA-Z0-9]+)?$/.test(scrambledSeedWords) || !/^[a-zA-Z0-9]+$/.test(azAZ09Pin)) {
     throw new Error('Invalid input for unscrambling.');
   }
 
@@ -53,14 +56,13 @@ const unscramble = function unscramble(scrambledSeedWords, azAZ09Pin) {
 };
 
 // Example usage
-const ed25519KeyPair = crypto.signKeyPair();
-const azAZ09Pin = '155Z0b';
-const seedWords = keyPairTo12SeedWord(ed25519KeyPair);
+const exampleSeedWords = 'abc123|def456'; // Replace with actual 12-word seed
+const examplePin = '155Z0b';
 
 // Scramble the seed words
-const scrambledData = scramble(seedWords, azAZ09Pin);
+const scrambledData = scramble(exampleSeedWords, examplePin);
 console.log('Scrambled Data:', scrambledData);
 
 // Unscramble the data
-const unscrambledSeedWords = unscramble(scrambledData, azAZ09Pin);
+const unscrambledSeedWords = unscramble(scrambledData, examplePin);
 console.log('Unscrambled Seed Words:', unscrambledSeedWords);
