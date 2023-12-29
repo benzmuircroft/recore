@@ -1,27 +1,22 @@
 const crypto = require('crypto');
 
-// convert Ed25519 key pair to a 12-word seed
-const keyPairTo12SeedWord = function keyPairTo12SeedWord(ed25519KeyPair) {
-  // use https://github.com/dazoe/ed25519
-  // Convert keys to base64 to create a more compact representation
+
+// convert Ed25519 key pair to a base64|base64 seed (todo: 12 seed word from ed25519 and ed25519 from seed word)
+const keyPairTo12SeedWord = function keyPairTo12SeedWord(ed25519KeyPair) { // use https://github.com/dazoe/ed25519 to convert
+  // donkeyballs
   const publicKeyBase64 = ed25519KeyPair.publicKey.toString('base64');
   const privateKeyBase64 = ed25519KeyPair.privateKey.toString('base64');
-
   return `${publicKeyBase64}|${privateKeyBase64}`;
 };
 
-// scramble a 12-word seed with an alphanumeric PIN
-const scramble = function scramble(seedWords, azAZ09Pin) {
-  // Validate input
-  if (!seedWords || !/^[a-zA-Z0-9]+(\|[a-zA-Z0-9]+)?$/.test(seedWords) || !/^[a-zA-Z0-9]+$/.test(azAZ09Pin)) {
+
+
+const scramble = function scramble(seedWords, azAZ09Pin) { // scramble a 12-word seed with an alphanumeric PIN
+  if (!seedWords || !/^[a-zA-Z0-9]+(\|[a-zA-Z0-9]+)?$/.test(seedWords) || !/^[a-zA-Z0-9]+$/.test(azAZ09Pin)) { // Validate input
     throw new Error('Invalid input for scrambling.');
   }
-
-  // Convert PIN to an array of numbers
-  const pinArray = azAZ09Pin.split('').map(char => parseInt(char, 36));
-
-  // Scramble seed words based on the PIN
-  const scrambledSeedWords = seedWords
+  const pinArray = azAZ09Pin.split('').map(char => parseInt(char, 36)); // Convert PIN to an array of numbers
+  const scrambledSeedWords = seedWords // Scramble seed words based on the PIN
     .split('|')
     .map((word, index) => {
       const pinIndex = index % pinArray.length;
@@ -29,7 +24,6 @@ const scramble = function scramble(seedWords, azAZ09Pin) {
       return seedWords.split('|')[newPosition];
     })
     .join('|');
-
   return scrambledSeedWords;
 };
 
