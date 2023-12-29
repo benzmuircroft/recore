@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 
 
-// convert Ed25519 key pair to a base64|base64 seed (todo: 12 seed word from ed25519 and ed25519 from seed word)
+// convert Ed25519 key pair to a base64|base64 seed (todo: 12 seed word from ed25519 and ed25519 back-to seed word)
 const keyPairTo12SeedWord = function keyPairTo12SeedWord(ed25519KeyPair) { // use https://github.com/dazoe/ed25519 to convert
   // donkeyballs
   const publicKeyBase64 = ed25519KeyPair.publicKey.toString('base64');
