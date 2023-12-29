@@ -1,7 +1,16 @@
+const crypto = require('crypto');
+
+// Function to convert Ed25519 key pair to a 12-word seed
+const keyPairTo12SeedWord = function keyPairTo12SeedWord(ed25519KeyPair) {
+  // Replace this with your actual conversion logic
+  // For simplicity, let's assume a direct concatenation
+  return `${ed25519KeyPair.publicKey.toString('hex')}|${ed25519KeyPair.privateKey.toString('hex')}`;
+};
+
 // Function to scramble a 12-word seed with an alphanumeric PIN
 const scramble = function scramble(seedWords, azAZ09Pin) {
   // Validate input
-  if (!seedWords || seedWords.length !== 12 || !/^[a-zA-Z0-9]+$/.test(azAZ09Pin)) {
+  if (!seedWords || !/^[a-fA-F0-9]+\|[a-fA-F0-9]+$/.test(seedWords) || !/^[a-zA-Z0-9]+$/.test(azAZ09Pin)) {
     throw new Error('Invalid input for scrambling.');
   }
 
@@ -10,13 +19,13 @@ const scramble = function scramble(seedWords, azAZ09Pin) {
 
   // Scramble seed words based on the PIN
   const scrambledSeedWords = seedWords
-    .split(' ')
+    .split('|')
     .map((word, index) => {
       const pinIndex = index % pinArray.length;
       const newPosition = (index + pinArray[pinIndex]) % seedWords.length;
-      return seedWords.split(' ')[newPosition];
+      return seedWords.split('|')[newPosition];
     })
-    .join(' ');
+    .join('|');
 
   return scrambledSeedWords;
 };
@@ -24,7 +33,7 @@ const scramble = function scramble(seedWords, azAZ09Pin) {
 // Function to unscramble data with an alphanumeric PIN
 const unscramble = function unscramble(scrambledSeedWords, azAZ09Pin) {
   // Validate input
-  if (!scrambledSeedWords || scrambledSeedWords.split(' ').length !== 12 || !/^[a-zA-Z0-9]+$/.test(azAZ09Pin)) {
+  if (!scrambledSeedWords || !/^[a-fA-F0-9]+\|[a-fA-F0-9]+$/.test(scrambledSeedWords) || !/^[a-zA-Z0-9]+$/.test(azAZ09Pin)) {
     throw new Error('Invalid input for unscrambling.');
   }
 
@@ -33,25 +42,26 @@ const unscramble = function unscramble(scrambledSeedWords, azAZ09Pin) {
 
   // Unscramble seed words based on the PIN
   const unscrambledSeedWords = scrambledSeedWords
-    .split(' ')
+    .split('|')
     .map((word, index) => {
       const pinIndex = index % pinArray.length;
       const originalPosition = (index - pinArray[pinIndex] + scrambledSeedWords.length) % scrambledSeedWords.length;
-      return scrambledSeedWords.split(' ')[originalPosition];
+      return scrambledSeedWords.split('|')[originalPosition];
     })
-    .join(' ');
+    .join('|');
 
   return unscrambledSeedWords;
 };
 
 // Example usage
-const seedWords = 'word1 word2 word3 word4 word5 word6 word7 word8 word9 word10 word11 word12';
-const pin = 'abc12';
+const ed25519KeyPair = crypto.signKeyPair();
+const azAZ09Pin = '155Z0b';
+const seedWords = keyPairTo12SeedWord(ed25519KeyPair);
 
 // Scramble the seed words
-const scrambledData = scramble(seedWords, pin);
+const scrambledData = scramble(seedWords, azAZ09Pin);
 console.log('Scrambled Data:', scrambledData);
 
 // Unscramble the data
-const unscrambledSeedWords = unscramble(scrambledData, pin);
+const unscrambledSeedWords = unscramble(scrambledData, azAZ09Pin);
 console.log('Unscrambled Seed Words:', unscrambledSeedWords);
