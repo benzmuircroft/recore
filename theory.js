@@ -2,12 +2,11 @@ const crypto = require('crypto');
 
 // Function to convert Ed25519 key pair to a 12-word seed
 const keyPairTo12SeedWord = function keyPairTo12SeedWord(ed25519KeyPair) {
-  // Replace this with your actual conversion logic
-  // For simplicity, let's assume a direct concatenation
+  // todo: use actual conversion logic github.com/dazoe/ed25519
   return `${ed25519KeyPair.publicKey.toString('hex')}|${ed25519KeyPair.privateKey.toString('hex')}`;
 };
 
-// Function to scramble a 12-word seed with an alphanumeric PIN
+// scramble a 12-word seed with an alphanumeric PIN
 const scramble = function scramble(seedWords, azAZ09Pin) {
   // Validate input
   if (!seedWords || !/^[a-fA-F0-9]+\|[a-fA-F0-9]+$/.test(seedWords) || !/^[a-zA-Z0-9]+$/.test(azAZ09Pin)) {
@@ -30,7 +29,7 @@ const scramble = function scramble(seedWords, azAZ09Pin) {
   return scrambledSeedWords;
 };
 
-// Function to unscramble data with an alphanumeric PIN
+// unscramble data with an alphanumeric PIN
 const unscramble = function unscramble(scrambledSeedWords, azAZ09Pin) {
   // Validate input
   if (!scrambledSeedWords || !/^[a-fA-F0-9]+\|[a-fA-F0-9]+$/.test(scrambledSeedWords) || !/^[a-zA-Z0-9]+$/.test(azAZ09Pin)) {
