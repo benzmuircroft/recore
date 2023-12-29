@@ -27,18 +27,13 @@ const scramble = function scramble(seedWords, azAZ09Pin) { // scramble a 12-word
   return scrambledSeedWords;
 };
 
-// unscramble data with an alphanumeric PIN
-const unscramble = function unscramble(scrambledSeedWords, azAZ09Pin) {
-  // Validate input
-  if (!scrambledSeedWords || !/^[a-zA-Z0-9]+(\|[a-zA-Z0-9]+)?$/.test(scrambledSeedWords) || !/^[a-zA-Z0-9]+$/.test(azAZ09Pin)) {
+
+const unscramble = function unscramble(scrambledSeedWords, azAZ09Pin) { // unscramble data with an alphanumeric PIN
+  if (!scrambledSeedWords || !/^[a-zA-Z0-9]+(\|[a-zA-Z0-9]+)?$/.test(scrambledSeedWords) || !/^[a-zA-Z0-9]+$/.test(azAZ09Pin)) { // Validate input
     throw new Error('Invalid input for unscrambling.');
   }
-
-  // Convert PIN to an array of numbers
-  const pinArray = azAZ09Pin.split('').map(char => parseInt(char, 36));
-
-  // Unscramble seed words based on the PIN
-  const unscrambledSeedWords = scrambledSeedWords
+  const pinArray = azAZ09Pin.split('').map(char => parseInt(char, 36)); // Convert PIN to an array of numbers
+  const unscrambledSeedWords = scrambledSeedWords // Unscramble seed words based on the PIN
     .split('|')
     .map((word, index) => {
       const pinIndex = index % pinArray.length;
@@ -46,9 +41,11 @@ const unscramble = function unscramble(scrambledSeedWords, azAZ09Pin) {
       return scrambledSeedWords.split('|')[originalPosition];
     })
     .join('|');
-
   return unscrambledSeedWords;
 };
+
+
+
 
 // Example usage
 const exampleSeedWords = 'abc123|def456'; // Replace with actual 12-word seed
