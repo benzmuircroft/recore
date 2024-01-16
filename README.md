@@ -31,7 +31,7 @@ npm i "github:benzmuircroft/recore"
   const seed = '5bbj66y8njo79oarnbqxwf4x17up4yusg7h7zg7qcw6iey63rd7o';
   */
 
-  const core = await recore.reloadCore(keyPair, seed, './benz', {})
+  const core = await recore.reloadCore(keyPair, seed, './folder', { valueEncoding: 'json' });
   
   console.log(`core:
     id:           ${core.id}
