@@ -10,7 +10,7 @@ npm i "github:benzmuircroft/recore"
 ## Usage
 ```js
 ;(async function() {
-  const recore = require('./recore.js');
+  const recore = require('recore');
   
   const keyPair = await recore.createKeyPair();
   console.log('keyPair:', keyPair);
