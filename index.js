@@ -28,10 +28,10 @@ const recore = {
     await s.close();
     return seed;
   },
-  reloadCore: async function(keyPair, seed, storeOptions, coreOptions) {
+  reloadCore: async function(keyPair, seed, storeFolderOrRAM, coreOptions) {
     let s;
-    if (storeOptions._isCorestore) s = storeOptions; // an existing store
-    else s = new Corestore(storeOptions); // './folder' or RAM
+    if (storeFolderOrRAM._isCorestore) s = storeFolderOrRAM; // an existing store
+    else s = new Corestore(storeFolderOrRAM); // './folder' or RAM
     await s.ready();
     const i = s.get({
       id: seed,
