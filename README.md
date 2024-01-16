@@ -36,7 +36,8 @@ npm i "github:benzmuircroft/recore"
   console.log(`core:
     id:           ${core.id}
     key:          ${core.key.toString('hex')}
-    discoveryKey: ${core.discoveryKey.toString('hex')}`);
+    discoveryKey: ${core.discoveryKey.toString('hex')}`
+  );
 
   // over and over, every time it will get the same result!
 
