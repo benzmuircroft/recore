@@ -12,6 +12,8 @@ npm i "github:benzmuircroft/recore"
 ;(async function() {
 
   const recore = require('recore');
+
+  // part 1
   
   const keyPair = await recore.createKeyPair();
 
@@ -21,7 +23,7 @@ npm i "github:benzmuircroft/recore"
 
   console.log('seed:', seed);
 
-  // save what was printed out and retry like:
+  // comment out part 1, save what was printed out and retry like:
   /*
   const keyPair = {
     publicKey: 'd8429f78071261dfc304105cfa174f9766dd02763779db9bae653d5403d920fb',
