@@ -1,0 +1,25 @@
+{
+  "name": "recore",
+  "version": "0.0.1",
+  "description": "A method of remembering / recovering the same id, key & discoveryKey",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/benzmuircroft/recore"
+  },
+  "dependencies": {
+    "random-access-memory": "^6.2.0",
+    "corestore": "^6.15.13",
+    "b4a": "^1.6.0"
+  },
+  "keywords": [
+    "local-first",
+    "offline-first",
+    "distributed",
+    "p2p",
+    "hypercore",
+    "corestore",
+  ],
+  "author": "Benz Muircroft",
+  "license": "MIT"
+}
