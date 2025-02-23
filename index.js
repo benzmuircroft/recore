@@ -1,4 +1,5 @@
 const crypto = require('hypercore-crypto');
+const b4a = require('b4a')
 const Corestore = require('corestore');
 
 const recore = {
