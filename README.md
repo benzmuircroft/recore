@@ -56,6 +56,7 @@ npm i "github:benzmuircroft/recore"
 
 ```js
 // recreates the same drive discovery key
+const crypto = require('hypercore-crypto');
 const seed = 'edee2e749d94a2d275fa9e4edfdf84c8';
 const readerKey = b4a.from('26eab3b63ef34a2325865054a5423679035a85e7aca26a7cf8c4286f61ca29b8', 'hex'); // from drive.key.toString('hex'))
 const primaryKeyHex = b4a.alloc(32).fill(seed); // the writers corestore
