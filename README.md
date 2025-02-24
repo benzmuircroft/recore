@@ -21,7 +21,10 @@ npm i "github:benzmuircroft/recore"
   
   const keyPair = await recore.createKeyPair(seed);
 
-  console.log('keyPair:', keyPair);
+  console.log({
+    publicKey: keyPair.publicKey.toString('hex'),
+    secretKey: keyPair.secretKey.toString('hex')
+  });
 
   // comment out part 1, save what was printed out and retry like:
   /*
