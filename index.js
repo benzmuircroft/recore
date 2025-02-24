@@ -14,7 +14,7 @@ const recore = {
     if (storeFolderOrRAM._isCorestore) s = storeFolderOrRAM; // is a pre-created store
     else s = new Corestore(storeFolderOrRAM); // is a './folder' or RAM
     await s.ready();
-    const i = s.get({
+    const i = s.get({ // instance
       keyPair,
       ...coreOptions
     });
