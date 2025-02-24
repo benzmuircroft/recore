@@ -56,9 +56,10 @@ const seed = 'edee2e749d94a2d275fa9e4edfdf84c8';
 const readerKey = b4a.from('26eab3b63ef34a2325865054a5423679035a85e7aca26a7cf8c4286f61ca29b8', 'hex'); // from drive.key.toString('hex'))
 const primaryKeyHex = b4a.alloc(32).fill(seed); // the writers corestore
 const topic = crypto.discoveryKey(readerKey); // from drive.key.toString('hex') not needed!!!!!
-
+/*
 the discoveryKey is useful with hyperdrive v11.6.3 but you could also just join a b4a.alloc('32', 'string') as the topic
 
 the whole point of this exercise is that we prove that we can recore even drives from seeds determinalistically everytime even if you delete the storage
 you can get it back from scratch!!
+*/
 ```
