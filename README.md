@@ -23,8 +23,8 @@ npm i "github:benzmuircroft/recore"
 
   console.log('keyPair:', keyPair);
   console.log({
-    publicKey: keyPair.publicKey.toString('hex'),
-    secretKey: keyPair.secretKey.toString('hex')
+    publicKey: b4a.from(keyPair.publicKey.toString('hex'), 'hex'),
+    secretKey: b4a.from(keyPair.secretKey.toString('hex'), 'hex')
   });
 
   // comment out part 1, save what was printed out and retry like:
